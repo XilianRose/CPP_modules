@@ -1,31 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   Contact.hpp                                        :+:    :+:            */
+/*   Contact.cpp                                        :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: mstegema <mstegema@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2024/04/05 12:29:16 by mstegema      #+#    #+#                 */
-/*   Updated: 2024/04/25 15:17:53 by mstegema      ########   odam.nl         */
+/*   Created: 2024/04/25 10:41:05 by mstegema      #+#    #+#                 */
+/*   Updated: 2024/04/25 15:22:18 by mstegema      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#pragma once
 #include <iostream>
+#include "Contact.hpp"
 
-class Contact {
-public:
-	Contact(void);
-	~Contact(void);
-	
-	std::string	_FirstName;
-	std::string	_LastName;
-	std::string	_NickName;
-	std::string	_PhoneNumber;
-	std::string	_DarkestSecret;
+Contact::Contact(void){
+	std::cout << "Constructor called" << std::endl;
+	Contact::_Id += 1;
+	return;
+}
 
-	static int	GetId(void);
+Contact::~Contact(void){
+	std::cout << "Destructor called" << std::endl;
+	return;
+}
 
-private:
-	static int			_Id;
-};
+int	Contact::GetId(void){
+	return Contact::_Id;
+}
+
+int	Contact::_Id = 0;
