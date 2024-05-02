@@ -6,7 +6,7 @@
 /*   By: mstegema <mstegema@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/04/05 12:33:49 by mstegema      #+#    #+#                 */
-/*   Updated: 2024/05/01 12:24:23 by mstegema      ########   odam.nl         */
+/*   Updated: 2024/05/02 19:00:13 by mstegema      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 
 int	main(void){
-	PhoneBook	phonebook;
+	PhoneBook	phoneBook;
 	std::string	input;
 
 	while(1)
@@ -26,9 +26,9 @@ int	main(void){
 		std::cout << "> ";
 		std::getline(std::cin, input);
 		if (input == "ADD")
-			phonebook.add();
+			phoneBook.add();
 		else if (input == "SEARCH")
-			phonebook.search();
+			phoneBook.search();
 		else if (input == "EXIT")
 			return(0);
 		else
