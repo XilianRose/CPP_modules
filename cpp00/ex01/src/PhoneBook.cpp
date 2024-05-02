@@ -6,7 +6,7 @@
 /*   By: mstegema <mstegema@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/04/05 12:35:53 by mstegema      #+#    #+#                 */
-/*   Updated: 2024/05/01 16:49:34 by mstegema      ########   odam.nl         */
+/*   Updated: 2024/05/02 17:54:04 by mstegema      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,9 +30,42 @@ void	PhoneBook::add(void){
 	{
 		input = "";
 		std::cout << "First name	: ";
-		if (std::getline(std::cin, input) && input !=)
+		if (std::getline(std::cin, input) && input != "")
+		{
 			this->_contacts[this->_index % 8].FirstName = input;
+			break;
+		}
+		std::cout << "Field can't be left empty." << std::endl;
 	}
+	while(1)
+	{
+		input = "";
+		std::cout << "Last name	: ";
+		if (std::getline(std::cin, input) && input != "")
+		{
+			this->_contacts[this->_index % 8].LastName = input;
+			break;
+		}
+		std::cout << "Field can't be left empty." << std::endl;
+	}
+	std::cout << "FirstName: " << this->_contacts[this->_index % 8].FirstName << std::endl;
+	std::cout << "LastName: " << this->_contacts[this->_index % 8].LastName << std::endl;
+	this->_index++;
 	return;
 }
 
+void	PhoneBook::search(void){
+	std::string	input;
+
+	while(1)
+	{
+		input = "";
+		std::cout << "Enter the index: ";
+		if (std::getline(std::cin, input) && input != "")
+		{
+			break;
+		}
+		std::cout << "Field can't be left empty." << std::endl;
+	}
+	return;
+}

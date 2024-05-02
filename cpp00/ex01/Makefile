@@ -10,16 +10,17 @@ CFLAGS	+= -g #-fsanitize=address
 endif
 
 # directories
+SRCDIR	= src
 OBJDIR	= obj
 BINDIR	= bin
 
 # sources
-SRCS	= main.cpp \
-	PhoneBook.cpp \
-	Contact.cpp
+SRCS	= $(SRCDIR)/main.cpp \
+	$(SRCDIR)/PhoneBook.cpp \
+	$(SRCDIR)/Contact.cpp
 
 # objects
-OBJS	= $(SRCS:%.c=$(OBJDIR)/%.o)
+OBJS	= $(SRCS:$(SRCDIR)/%.c=$(OBJDIR)/%.o)
 
 # colours
 PURPLE	= \033[0;35m
