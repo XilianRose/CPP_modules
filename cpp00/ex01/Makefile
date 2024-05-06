@@ -6,7 +6,7 @@ CFLAGS	= -Wall -Wextra -Werror -std=c++11
 HEADER	= -I $(INCDIR)
 
 ifdef DEBUG
-CFLAGS	+= -g #-fsanitize=address
+CFLAGS	+= -g -fsanitize=address
 endif
 
 # directories
