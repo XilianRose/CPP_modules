@@ -6,7 +6,7 @@
 /*   By: mstegema <mstegema@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/04/05 12:22:44 by mstegema      #+#    #+#                 */
-/*   Updated: 2024/05/06 11:32:17 by mstegema      ########   odam.nl         */
+/*   Updated: 2024/05/06 12:49:33 by mstegema      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,5 +28,6 @@ private:
 	void		_gatherInfo(std::string& field, const std::string& prompt);
 	std::string	_resizeToTen(const std::string &str);
 	void		_printPB(void);
+	void		_printContact(int index);
 
 };

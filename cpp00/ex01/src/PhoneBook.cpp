@@ -6,7 +6,7 @@
 /*   By: mstegema <mstegema@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/04/05 12:35:53 by mstegema      #+#    #+#                 */
-/*   Updated: 2024/05/06 12:37:24 by mstegema      ########   odam.nl         */
+/*   Updated: 2024/05/06 13:07:35 by mstegema      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,13 +71,24 @@ void	PhoneBook::_printPB(void){
 	std::cout << _resizeToTen("Last Name") << "|";
 	std::cout << _resizeToTen("Nickname") << std::endl;
 	std::cout << line << std::endl;
-	for(int i = 0; i < 8; i++)
-	{
+	for(int i = 0; i < 8; i++){
 		std::cout << _resizeToTen(std::to_string(i + 1)) << "|";
 		std::cout << _resizeToTen(this->_contacts[i].firstName) << "|";
 		std::cout << _resizeToTen(this->_contacts[i].lastName) << "|";
 		std::cout << _resizeToTen(this->_contacts[i].nickname) << std::endl;
 	}
+	return;
+}
+
+void	PhoneBook::_printContact(int index){
+	Contact	contact = this->_contacts[index - 1];
+
+	std::cout << "First name	: " << contact.firstName << std::endl;
+	std::cout << "Last name	: " << contact.lastName << std::endl;
+	std::cout << "Nickname	: " << contact.nickname << std::endl;
+	std::cout << "Phone number	: " << contact.phoneNumber << std::endl;
+	std::cout << "Darkest secret	: " << contact.darkestSecret << std::endl;
+	return;
 }
 
 void	PhoneBook::search(void){
@@ -85,13 +96,18 @@ void	PhoneBook::search(void){
 	int			index;
 
 	_printPB();
+	if (this->_index == 0){
+		std::cout << "ByteBook is empty!" << std::endl;
+		return;
+	}
 	while(1){
 		input = "";
-		std::cout << "Enter the index of the contact you would like to display: ";
+		std::cout << "Enter the index of the contact you would like to display" << std::endl << "> ";
 		if (std::getline(std::cin, input) && input != ""){
 			if (input.length() == 1 && input[0] > '0' && input[0] < '9'){
 				index = std::stoi(input);
-				break;
+				if (index <= this->_index)
+					break;
 			}
 			std::cout << "Please enter a valid option." << std::endl;
 		}
@@ -99,5 +115,6 @@ void	PhoneBook::search(void){
 		std::cout << "Field can't be left empty." << std::endl;
 		}
 	}
+	_printContact(index);
 	return;
 }
