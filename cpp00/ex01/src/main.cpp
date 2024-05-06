@@ -6,7 +6,7 @@
 /*   By: mstegema <mstegema@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/04/05 12:33:49 by mstegema      #+#    #+#                 */
-/*   Updated: 2024/05/06 12:26:15 by mstegema      ########   odam.nl         */
+/*   Updated: 2024/05/06 15:15:56 by mstegema      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,17 +24,23 @@ int	main(void){
 		std::cout << "ADD	: save a new contact" << std::endl;
 		std::cout << "SEARCH	: display a specific contact" << std::endl;
 		std::cout << "EXIT	: exit ByteBook" << std::endl;
-		std::cout << "> ";
-		std::getline(std::cin, input);
-		if (input == "ADD")
-			phoneBook.add();
-		else if (input == "SEARCH")
-			phoneBook.search();
-		else if (input == "EXIT")
-			return(0);
-		else{
-			std::cout << "Please enter a valid option." << std::endl;
-			continue;
+		while(1){
+			std::cout << "> ";
+			std::getline(std::cin, input);
+			if (input == "ADD"){
+				phoneBook.add();
+				break;
+			}
+			else if (input == "SEARCH"){
+				phoneBook.search();
+				break;
+			}
+			else if (input == "EXIT")
+				return 0;
+			else{
+				std::cout << std::endl << "Please enter a valid option." << std::endl;
+				continue;
+			}
 		}
 	}
 	return 0;
