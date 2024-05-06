@@ -1,4 +1,4 @@
-NAME = myAwesomePhoneBook
+NAME = byteBook
 
 # compilation
 CC		= c++
