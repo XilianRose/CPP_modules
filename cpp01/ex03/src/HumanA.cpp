@@ -6,25 +6,19 @@
 /*   By: mstegema <mstegema@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/05/07 15:07:12 by mstegema      #+#    #+#                 */
-/*   Updated: 2024/05/07 15:15:50 by mstegema      ########   odam.nl         */
+/*   Updated: 2024/05/14 13:55:32 by mstegema      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "HumanA.hpp"
 
-HumanA::HumanA(void){
-	std::cout << "Constructor called" << std::endl;
-	return;
-}
-
-HumanA::HumanA(std::string name, Weapon weapon){
-	this->_name = name;
-	this->_weapon = weapon;
+HumanA::HumanA(std::string name, Weapon &weapon) : _name(name), _weapon(weapon){
+	std::cout << this->_name << "'s constructor called" << std::endl;
 	return;
 }
 
 HumanA::~HumanA(void){
-	std::cout << "Destructor called" << std::endl;
+	std::cout << this->_name << "'s destructor called" << std::endl;
 	return;
 }
 
