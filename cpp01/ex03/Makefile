@@ -2,11 +2,11 @@ NAME = UnnecessaryViolence
 
 # compilation
 CC		= c++
-CFLAGS	= -Wall -Wextra -Werror -std=c++11
+CXXFLAGS	= -Wall -Wextra -Werror -std=c++11
 HEADER	= -I $(INCDIR)
 
 ifdef DEBUG
-CFLAGS	+= -g -fsanitize=address
+CXXFLAGS	+= -g3 #-fsanitize=address
 endif
 
 # directories
@@ -32,12 +32,12 @@ all: $(NAME)
 
 $(NAME): $(OBJS)
 	@mkdir -p $(BINDIR)
-	@$(CC) $(OBJS) -o $(BINDIR)/$(NAME)
+	@$(CC) $(CXXFLAGS) $(OBJS) -o $(BINDIR)/$(NAME)
 	@echo "$(PURPLE)$(NAME)$(NC) has been created"
 
 $(OBJDIR)/%.o: %.cpp
 	@mkdir -p $(OBJDIR)
-	@$(CC) -c $(CFLAGS) $(HEADER) -o $@ $^
+	@$(CC) -c $(CXXFLAGS) $(HEADER) -o $@ $^
 	@echo "Compiling: $(PURPLE)$<$(NC)"
 
 clean:
