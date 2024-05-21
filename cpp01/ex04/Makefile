@@ -39,6 +39,7 @@ $(OBJDIR)/%.o: %.cpp
 
 clean:
 	@rm -rf $(OBJDIR)
+	@rm -f tests/*.replace
 	@echo "$(PURPLE)object files$(NC) have been removed"
 
 fclean: clean
