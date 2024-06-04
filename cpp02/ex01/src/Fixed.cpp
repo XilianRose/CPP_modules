@@ -5,20 +5,18 @@ Fixed::Fixed(void) : _rawBits(0){
 	return;
 }
 
-Fixed::Fixed(int const param){
+Fixed::Fixed(int const param) : _rawBits(param << _fractionalBits){
 	std::cout << "Int parametric constructor called" << std::endl;
-	this->_rawBits = param << _fractionalBits;
 	return;
 }
 
-Fixed::Fixed(float const param){
+Fixed::Fixed(float const param) : _rawBits((int)((1 << _fractionalBits) * param)){
 	std::cout << "Float parametric constructor called" << std::endl;
-	this->_rawBits = (int)((1 << this->_fractionalBits) * param);
 	// int	intPart = (int) param;
 	// int	fractionalPart = param - intPart;
 	// this->_rawBits = intPart << _fractionalBits;
 	// this->_rawBits += (int)((1 << _fractionalBits)*(fractionalPart));
-	return; 
+	return;
 }
 
 Fixed::Fixed(Fixed const & src){
@@ -38,17 +36,25 @@ Fixed &	Fixed::operator=(Fixed const & src){
 	return *this;
 }
 
-int		Fixed::getRawBits(void) const{
-	std::cout << "getRawBits member function called" << std::endl;
+std::ostream &	operator<<(std::ostream & out, Fixed const & src){
+	return (out << src.toFloat());
+}
+
+int	Fixed::getRawBits(void) const{
+	// std::cout << "getRawBits member function called" << std::endl;
 	return this->_rawBits;
 }
 
 void	Fixed::setRawBits(int const raw){
-std::cout << "setRawBits member function called" << std::endl;
+	// std::cout << "setRawBits member function called" << std::endl;
 	this->_rawBits = raw;
 	return;
 }
 
 float	Fixed::toFloat(void) const {
 	return this->_rawBits / (float)(1 << this->_fractionalBits);
+}
+
+int	Fixed::toInt(void) const {
+	return this->_rawBits >> this->_fractionalBits;
 }
