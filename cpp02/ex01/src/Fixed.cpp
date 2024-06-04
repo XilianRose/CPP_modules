@@ -12,10 +12,6 @@ Fixed::Fixed(int const param) : _rawBits(param << _fractionalBits){
 
 Fixed::Fixed(float const param) : _rawBits((int)((1 << _fractionalBits) * param)){
 	std::cout << "Float parametric constructor called" << std::endl;
-	// int	intPart = (int) param;
-	// int	fractionalPart = param - intPart;
-	// this->_rawBits = intPart << _fractionalBits;
-	// this->_rawBits += (int)((1 << _fractionalBits)*(fractionalPart));
 	return;
 }
 
@@ -52,9 +48,9 @@ void	Fixed::setRawBits(int const raw){
 }
 
 float	Fixed::toFloat(void) const {
-	return this->_rawBits / (float)(1 << this->_fractionalBits);
+	return this->_rawBits / (float)(1 << _fractionalBits);
 }
 
 int	Fixed::toInt(void) const {
-	return this->_rawBits >> this->_fractionalBits;
+	return this->_rawBits >> _fractionalBits;
 }
