@@ -1,4 +1,5 @@
 #include "Fixed.hpp"
+#include <cmath>
 
 Fixed::Fixed(void) : _rawBits(0){
 	std::cout << "Default constructor called" << std::endl;
@@ -10,7 +11,7 @@ Fixed::Fixed(int const param) : _rawBits(param << _fractionalBits){
 	return;
 }
 
-Fixed::Fixed(float const param) : _rawBits((int)((1 << _fractionalBits) * param)){
+Fixed::Fixed(float const param) : _rawBits(std::roundf((1 << _fractionalBits) * param)){
 	std::cout << "Float parametric constructor called" << std::endl;
 	return;
 }

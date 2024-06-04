@@ -1,4 +1,5 @@
 #include "Fixed.hpp"
+#include <cmath>
 
 /*		Constructors & destructors		*/
 /*--------------------------------------*/
@@ -12,7 +13,7 @@ Fixed::Fixed(int const param) : _rawBits(param << _fractionalBits){
 	return;
 }
 
-Fixed::Fixed(float const param) : _rawBits((int)((1 << _fractionalBits) * param)){
+Fixed::Fixed(float const param) : _rawBits(std::roundf((1 << _fractionalBits) * param)){
 	// std::cout << "Float parametric constructor called" << std::endl;
 	return;
 }
@@ -60,28 +61,28 @@ bool	Fixed::operator!=(Fixed const & src) const{
 /*------------------------------------------*/
 Fixed	Fixed::operator+(Fixed const & src) const{
 	Fixed	result;
-	
+
 	result.setRawBits(this->_rawBits + src.getRawBits());
 	return result;
 }
 
 Fixed	Fixed::operator-(Fixed const & src) const{
 	Fixed	result;
-	
+
 	result.setRawBits(this->_rawBits - src.getRawBits());
 	return result;
 }
 
 Fixed	Fixed::operator*(Fixed const & src) const{
 	Fixed	result;
-	
+
 	result.setRawBits((this->_rawBits * src.getRawBits()) / ( 1 << _fractionalBits));
 	return result;
 }
 
 Fixed	Fixed::operator/(Fixed const & src) const{
 	Fixed	result;
-	
+
 	result.setRawBits((this->_rawBits * ( 1 << _fractionalBits)) / src.getRawBits());
 	return result;
 }
