@@ -6,7 +6,7 @@
 /*   By: mstegema <mstegema@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/05/07 15:07:12 by mstegema      #+#    #+#                 */
-/*   Updated: 2024/05/14 13:55:32 by mstegema      ########   odam.nl         */
+/*   Updated: 2024/06/05 12:06:09 by mstegema      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,6 @@ HumanA::~HumanA(void){
 }
 
 void	HumanA::attack(void){
-	std::cout << this->_name << " attacks with their " << this->_weapon.getType() << std::endl;
+	std::cout << PURPLE << this->_name << " attacks with their " << this->_weapon.getType() << NC << std::endl;
 	return;
 }
