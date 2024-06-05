@@ -6,7 +6,7 @@
 /*   By: mstegema <mstegema@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/05/07 15:18:13 by mstegema      #+#    #+#                 */
-/*   Updated: 2024/05/14 14:28:55 by mstegema      ########   odam.nl         */
+/*   Updated: 2024/06/05 11:55:04 by mstegema      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,13 @@ int	main(void){
 		jim.setWeapon(club);
 		jim.attack();
 		club.setType("some other type of club");
+		jim.attack();
+	}
+	{
+		Weapon sword = Weapon("long sword");
+		HumanB jim("Jim");
+		jim.attack();
+		jim.setWeapon(sword);
 		jim.attack();
 	}
 	return 0;
