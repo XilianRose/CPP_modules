@@ -6,7 +6,7 @@
 /*   By: mstegema <mstegema@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/05/07 15:07:12 by mstegema      #+#    #+#                 */
-/*   Updated: 2024/05/14 14:28:02 by mstegema      ########   odam.nl         */
+/*   Updated: 2024/06/05 12:06:30 by mstegema      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,10 @@ HumanB::~HumanB(void){
 }
 
 void	HumanB::attack(void){
-	std::cout << this->_name << " attacks with their " << this->_weapon->getType() << std::endl;
+	if (this->_weapon == nullptr)
+		std::cout << PURPLE "The attack failed, " << this->_name << " has no weapon equipped" NC << std::endl;
+	else
+		std::cout << PURPLE << this->_name << " attacks with their " << this->_weapon->getType() << NC << std::endl;
 	return;
 }
 
