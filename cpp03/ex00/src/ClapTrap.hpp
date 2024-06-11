@@ -1,5 +1,6 @@
 #pragma once
 #include <iostream>
+#include "colours.hpp"
 
 class ClapTrap{
 	public:
@@ -8,16 +9,18 @@ class ClapTrap{
 		ClapTrap(ClapTrap const & src);
 		~ClapTrap(void);
 
-		ClapTrap &	operator=(ClapTrap const & src);
+		ClapTrap &		operator=(ClapTrap const & src);
 
-		std::string	getName(ClapTrap const & src);
-		void		attack(std::string const & target);
-		void		takeDamage(unsigned int amount);
-		void		beRepaired(unsigned int amount);
+		void			attack(std::string const & target);
+		void			takeDamage(unsigned int amount);
+		void			beRepaired(unsigned int amount);
+
+		std::string		getName(void) const;
+		void			printStatus(void) const;
 
 	private:
-		std::string	_name;
-		int			_hitPoints;
-		int			_energyPoints;
-		int			_attackDamage;
+		std::string		_name;
+		unsigned int	_hitPoints;
+		unsigned int	_energyPoints;
+		unsigned int	_attackDamage;
 };
