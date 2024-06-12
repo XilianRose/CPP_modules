@@ -1,7 +1,7 @@
 #include "ClapTrap.hpp"
 
 int	main(void){
-	ClapTrap one = ClapTrap("Puffy");
+	ClapTrap one = ClapTrap("Gamja");
 	ClapTrap two = ClapTrap("Potato");
 	ClapTrap cpy = ClapTrap(one);
 
