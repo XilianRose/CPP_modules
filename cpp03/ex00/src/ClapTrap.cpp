@@ -6,13 +6,13 @@ ClapTrap::ClapTrap(void){
 }
 
 ClapTrap::ClapTrap(std::string const & name) : _name(name), _hitPoints(10), _energyPoints(10), _attackDamage(0){
-	std::cout << LILAC "A wild "  << this->_name << " appeared" NC << std::endl;
+	std::cout << LILAC "A wild ClapTrap called "  << this->_name << " appeared" NC << std::endl;
 	return;
 }
 
 ClapTrap::ClapTrap(ClapTrap const & src) : _hitPoints(10), _energyPoints(10), _attackDamage(0){
 	*this = src;
-	std::cout << LILAC "Another " << this->_name << " appeared" NC << std::endl;
+	std::cout << LILAC "Another ClapTrap called " << this->_name << " appeared" NC << std::endl;
 	return;
 }
 
