@@ -31,6 +31,7 @@ ScavTrap &	ScavTrap::operator=(ScavTrap const & src){
 	this->_hitPoints = 100;
 	this->_energyPoints = 50;
 	this->_attackDamage = 20;
+	this->_maxHitPoints = 100;
 	return *this;
 }
 
