@@ -28,8 +28,8 @@ ClapTrap &	ClapTrap::operator=(ClapTrap const & src){
 
 void	ClapTrap::attack(std::string const & target){
 	if (this->_energyPoints > 0){
-		std::cout << GREEN << this->_name << " attacks " << target << NC << std::endl;
-		std::cout << GREEN << target << " lost " << this->_attackDamage << " hit points!" NC << std::endl;
+		std::cout << GREEN << this->_name << " attacks " << target ;
+		std::cout << " and " << target << " lost " << this->_attackDamage << " hit points!" NC << std::endl;
 		this->_energyPoints--;
 	}
 	else {
