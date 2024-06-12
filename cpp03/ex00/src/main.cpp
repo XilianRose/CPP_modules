@@ -5,11 +5,11 @@ int	main(void){
 	ClapTrap two = ClapTrap("Potato");
 	ClapTrap cpy = ClapTrap(one);
 
-	one.attack("Ringo");
+	one.attack("you");
 	one.printStatus();
-	two.attack("Ringo");
+	two.attack("you");
 	two.printStatus();
-	cpy.attack("Ringo");
+	cpy.attack("you");
 	one.takeDamage(5);
 	one.printStatus();
 	one.takeDamage(5);
