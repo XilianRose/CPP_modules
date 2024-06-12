@@ -1,9 +1,7 @@
 #pragma once
 
-#define	BOLDON "\33[1m"
-#define	BOLDOFF "\33[21m"
-#define	UNDERLINEON "\33[4m"
-#define	UNDERLINEOFF "\33[24m"
+#define	BOLD "\33[1m"
+#define	UNDERLINE "\33[4m"
 #define NC "\33[0m"
 
 /*	4-bit	*/

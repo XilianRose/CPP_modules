@@ -17,7 +17,7 @@ ClapTrap::ClapTrap(ClapTrap const & src) : _hitPoints(10), _energyPoints(10), _a
 }
 
 ClapTrap::~ClapTrap(void){
-	std::cout << "Default destructor called" << std::endl;
+	std::cout << LILAC "Default destructor called" << std::endl;
 	return;
 }
 
@@ -28,8 +28,8 @@ ClapTrap &	ClapTrap::operator=(ClapTrap const & src){
 
 void	ClapTrap::attack(std::string const & target){
 	if (this->_energyPoints > 0){
-		std::cout << BLUE << this->_name << " attacks " << target << NC << std::endl;
-		std::cout << BLUE << target << " lost " << this->_attackDamage << " hit points!" NC << std::endl;
+		std::cout << GREEN << this->_name << " attacks " << target << NC << std::endl;
+		std::cout << GREEN << target << " lost " << this->_attackDamage << " hit points!" NC << std::endl;
 		this->_energyPoints--;
 	}
 	else {
@@ -55,13 +55,17 @@ void	ClapTrap::takeDamage(unsigned int amount){
 
 void	ClapTrap::beRepaired(unsigned int amount){
 	if (this->_hitPoints == 10)
-		std::cout << LILAC << this->_name << " already has max hit points!" NC << std::endl;
+		std::cout << YELLOW << this->_name << " already has max hit points!" NC << std::endl;
 	else if (this->_energyPoints > 0){
-		std::cout << GREEN << this->_name << " repairs itself with " << amount << " hit points!" NC << std::endl;
 		this->_energyPoints--;
-		this->_hitPoints += amount;
-		if (this->_hitPoints > 10)
+		if (this->_hitPoints + amount <= 10){
+			std::cout << CYAN << this->_name << " repairs itself with " << amount << " hit points!" NC << std::endl;
+			this->_hitPoints += amount;
+		}
+		else{
+			std::cout << CYAN << this->_name << " repairs itself with " << 10 - this->_hitPoints << " hit points!" NC << std::endl;
 			this->_hitPoints = 10;
+		}
 	}
 	else {
 		std::cout << YELLOW "Oh no! " << this->_name << " tried to repair itself but doesn't have any energy points left" NC << std::endl;
@@ -74,7 +78,7 @@ std::string	ClapTrap::getName(void) const{
 }
 
 void	ClapTrap::printStatus(void) const{
-	std::cout << this->_name <<"'s status" << std::endl;
+	std::cout << UNDERLINE << this->_name <<"'s status" NC << std::endl;
 	std::cout << "Hit points	: " << this->_hitPoints << std::endl;
 	std::cout << "Energy points	: " << this->_energyPoints << std::endl;
 	return;
