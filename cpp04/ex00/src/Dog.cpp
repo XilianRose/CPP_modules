@@ -5,7 +5,7 @@ Dog::Dog(void) : Animal("Dog"){
 	return;
 }
 
-Dog::Dog(Dog const & src){
+Dog::Dog(Dog const & src) : Animal("Dog"){
 	std::cout << "It's another dog" << std::endl;
 	*this = src;
 	return;

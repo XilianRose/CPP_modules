@@ -5,7 +5,7 @@ Cat::Cat(void) : Animal("Cat"){
 	return;
 }
 
-Cat::Cat(Cat const & src){
+Cat::Cat(Cat const & src) : Animal("Cat"){
 	std::cout << "It's another cat" << std::endl;
 	*this = src;
 	return;
