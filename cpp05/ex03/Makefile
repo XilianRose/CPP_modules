@@ -1,4 +1,4 @@
-NAME = 28
+NAME = intern
 
 # compilation
 CC		= c++
