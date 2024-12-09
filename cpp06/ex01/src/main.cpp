@@ -10,6 +10,7 @@ int	main(void){
 	if (deserializedData == &originalData) {
 		std::cout << GREEN "Serialization and deserialization successful!" NC<< std::endl;
 		std::cout << "Original Data:		n = " << originalData.n << ", str = " << originalData.str << std::endl;
+		std::cout << "Serialized data:	" << raw << std::endl;
 		std::cout << "Deserialized Data:	n = " << deserializedData->n << ", str = " << deserializedData->str << std::endl;
 	} else
 		std::cerr << "Error: Pointers do not match!" << std::endl;
