@@ -3,6 +3,7 @@
 #include <string>
 #include <exception>
 #include <iomanip>
+#include <math.h>
 
 ScalarConverter::ScalarConverter(void) {
 	std::cout << GRAY "Default constructor called" NC << std::endl;
