@@ -25,17 +25,19 @@ Base*	Base::generate(void) {
 	}
 }
 
-void	Base::identify(Base* p) {
-	if (dynamic_cast<A*>(p))
+void	Base::identify(Base* ptr) {
+	if (!ptr)
+		std::cout << "Null pointer" << std::endl;
+	if (dynamic_cast<A*>(ptr))
 		std::cout << "A" << std::endl;
-	else if (dynamic_cast<B*>(p))
+	else if (dynamic_cast<B*>(ptr))
 		std::cout << "B" << std::endl;
-	else if (dynamic_cast<C*>(p))
+	else if (dynamic_cast<C*>(ptr))
 		std::cout << "C" << std::endl;
 	else
 		std::cout << "Unknown" << std::endl;
 }
 
-void	Base::identify(Base& p) {
-	identify(&p);
+void	Base::identify(Base& ref) {
+	identify(&ref);
 }
