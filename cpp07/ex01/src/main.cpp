@@ -4,13 +4,13 @@
 
 
 template <typename T>
-static void print(T * address){
-	std::cout << *address << std::endl;
+static void print(T & element){
+	std::cout << element << std::endl;
 }
 
 template <typename T>
-static void timesTwo(T * address){
-	*address = *address + *address;
+static void timesTwo(T & element){
+	element = element + element;
 }
 
 
