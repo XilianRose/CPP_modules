@@ -2,21 +2,24 @@
 #include "iter.hpp"
 #include "colours.hpp"
 
-void print(void * address){
-	std::cout << *(int *)address << std::endl;
+
+template <typename T>
+static void print(T * address){
+	std::cout << *address << std::endl;
 }
 
 template <typename T>
-void timesTwo(T * address){
-	*address *= 2;
+static void timesTwo(T * address){
+	*address = *address + *address;
 }
+
 
 int main(){
 	{
 		int intArray[] = {1, 2, 3, 4, 5};
 		std::cout << LILAC "Original intArray:" NC << std::endl;
 		iter(intArray, 5, print);
-		iter(intArray, 5, &timesTwo<int>);
+		iter(intArray, 5, timesTwo);
 		std::cout << LILAC "intArray after timesTwo:" NC << std::endl;
 		iter(intArray, 5, print);
 	}
