@@ -15,7 +15,8 @@ OBJDIR	= obj
 BINDIR	= bin
 
 # sources
-SRCS	= $(SRCDIR)/main.cpp
+SRCS	= $(SRCDIR)/main.cpp \
+	$(SRCDIR)/Span.cpp
 
 # objects
 OBJS	= $(SRCS:$(SRCDIR)/%.c=$(OBJDIR)/%.o)
