@@ -1,5 +1,6 @@
 #include "Span.hpp"
 #include <algorithm>
+#include <numeric>
 
 /*	Constructors & destructors	*/
 Span::Span(unsigned int n) : _n(n){
@@ -37,16 +38,27 @@ void	Span::addNumber(std::vector<int>::iterator begin, std::vector<int>::iterato
 	return ;
 }
 
+// int	Span::shortestSpan(void){
+// 	if (this->_numbers.size() < 2)
+// 		throw Span::TooFewNumbersException();
+// 	std::vector<int> sorted = this->_numbers;
+// 	std::sort(sorted.begin(), sorted.end());
+// 	int min = sorted[1] - sorted[0];
+// 	for (size_t i = 1; i < sorted.size() - 1; i++){
+// 		if (sorted[i + 1] - sorted[i] < min)
+// 			min = sorted[i + 1] - sorted[i];
+// 	}
+// 	return min;
+// }
+
 int	Span::shortestSpan(void){
 	if (this->_numbers.size() < 2)
 		throw Span::TooFewNumbersException();
 	std::vector<int> sorted = this->_numbers;
 	std::sort(sorted.begin(), sorted.end());
-	int min = sorted[1] - sorted[0];
-	for (size_t i = 1; i < sorted.size() - 1; i++){
-		if (sorted[i + 1] - sorted[i] < min)
-			min = sorted[i + 1] - sorted[i];
-	}
+	std::vector<int> differences(sorted.size() - 1);
+	std::adjacent_difference(sorted.begin(), sorted.end(), differences.begin());
+	int min = *std::min_element(differences.begin() + 1, differences.end());
 	return min;
 }
 
