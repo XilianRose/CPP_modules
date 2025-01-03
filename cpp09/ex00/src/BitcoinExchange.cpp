@@ -36,7 +36,7 @@ std::map<std::string, double>	parseDB(std::string filename){
 
 	if (!file.is_open())
 		throw BitcoinExchange::InvalidFileException();
-	std::getline(file, line);
+	std::getline(file, line); //skip header
 	while (std::getline(file, line)){
 		if (line.empty())
 			continue;
@@ -55,7 +55,7 @@ std::map<std::string, double>	parseDB(std::string filename){
 		}
 		if (value < 0)
 			throw BitcoinExchange::NegativeValueException();
-		if (value > 100000)
+		if (value > 1000)
 			throw BitcoinExchange::ValueTooLargeException();
 		data[date] = value;
 	}
@@ -84,5 +84,3 @@ const char *BitcoinExchange::NegativeValueException::what() const throw(){
 const char *BitcoinExchange::ValueTooLargeException::what() const throw(){
 		return "Error: too large a number.";
 }
-
-2011-08-10
