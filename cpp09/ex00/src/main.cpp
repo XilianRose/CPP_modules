@@ -1,6 +1,7 @@
 #include <iostream>
 #include <fstream>
 #include "BitcoinExchange.hpp"
+#include "colours.hpp"
 
 
 
@@ -17,7 +18,7 @@ int	main(int argc, char **argv)
 		bitcoinExchange.execute(filename);
 	}
 	catch (std::exception &e){
-		std::cerr << e.what() << std::endl;
+		std::cerr << RED << e.what() << NC << std::endl;
 		return 1;
 	}
 	return 0;

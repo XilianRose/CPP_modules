@@ -3,6 +3,7 @@
 #include <fstream>
 #include <regex>
 #include <iostream>
+#include "colours.hpp"
 
 void	trimWhitespace(std::string &str){
 	str.erase(0, str.find_first_not_of(' '));
@@ -116,13 +117,6 @@ BitcoinExchange::~BitcoinExchange(){
 	return ;
 }
 
-// void	printMap(std::map<std::string, double> data){
-// 	for (auto it = data.begin(); it != data.end(); it++){
-// 		std::cout << it->first << " => " << it->second << std::endl;
-// 	}
-// 	return ;
-// }
-
 /*	Member Functions	*/
 void	BitcoinExchange::execute(std::string filename){
 	std::ifstream file(filename);
@@ -131,7 +125,6 @@ void	BitcoinExchange::execute(std::string filename){
 	_data = parseDB();
 	if (_data.empty())
 		throw BitcoinExchange::InvalidDBException();
-	// printMap(_data);
 	if (!file.is_open())
 		throw BitcoinExchange::InvalidFileException();
 	std::getline(file, line); //skip header
@@ -140,7 +133,7 @@ void	BitcoinExchange::execute(std::string filename){
 			convert(_data, line);
 		}
 		catch (std::exception &e){
-			std::cerr << e.what() << std::endl;
+			std::cerr << GRAY << e.what() << NC << std::endl;
 		}
 	}
 	file.close();
