@@ -9,9 +9,20 @@ class BitcoinExchange{
 			public:
 				virtual const char * what() const throw();
 		};
+		class InvalidDBException : public std::exception{
+			public:
+				virtual const char * what() const throw();
+		};
 		class BadInputException : public std::exception{
 			public:
 				virtual const char * what() const throw();
+		};
+		class InvalidDateException : public std::exception{
+			public:
+				InvalidDateException(const std::string& date);
+				virtual const char * what() const throw();
+			private:
+				std::string _date;
 		};
 		class NegativeValueException : public std::exception{
 			public:
