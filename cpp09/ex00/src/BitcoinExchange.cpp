@@ -4,7 +4,7 @@
 #include <regex>
 #include <iostream>
 
-void	trimWhitespace(std::string str){
+void	trimWhitespace(std::string &str){
 	str.erase(0, str.find_first_not_of(' '));
 	str.erase(str.find_last_not_of(' ') + 1);
 	return ;
@@ -40,7 +40,7 @@ bool	validateDate(std::string date){
 
 std::map<std::string, double>	parseDB(void){
 	std::map<std::string, double> data;
-	std::ifstream db("../src/data.csv");
+	std::ifstream db("/home/mstegema/Documents/CPP_modules/cpp09/ex00/src/data.csv");
 	std::string line;
 	std::string date;
 	double value;
@@ -51,7 +51,7 @@ std::map<std::string, double>	parseDB(void){
 	while (std::getline(db, line)){
 		size_t pos = line.find(',');
 		if (pos == std::string::npos)
-			throw BitcoinExchange::InvalidDBException();		
+			throw BitcoinExchange::InvalidDBException();
 		date = line.substr(0, pos);
 		if (!validateDate(date))
 			throw BitcoinExchange::InvalidDBException();
@@ -67,14 +67,27 @@ std::map<std::string, double>	parseDB(void){
 	return data;
 }
 
-std::string	convert(std::string line){
+std::map<std::string, double>::iterator	findClosestDate(std::map<std::string, double> db, std::string date){
+	std::map<std::string, double>::iterator closest = db.begin();
+	
+	for (auto it = db.begin(); it != db.end(); it++){
+		if (it->first == date)
+			return it;
+		if (it->first < date && it->first > closest->first)
+			closest = it;
+	}
+	return closest;
+}
+
+void	convert(std::map<std::string, double> db, std::string line){
 	std::string date;
 	double value;
+	double rate;
 
 		size_t pos = line.find('|');
 		if (pos == std::string::npos)
 			throw BitcoinExchange::BadInputException();
-		date = line.substr(0, pos);
+		date = line.substr(0, pos);	
 		trimWhitespace(date);
 		if (!validateDate(date))
 			throw BitcoinExchange::InvalidDateException(date);
@@ -88,9 +101,29 @@ std::string	convert(std::string line){
 			throw BitcoinExchange::NegativeValueException();
 		if (value > 1000)
 			throw BitcoinExchange::ValueTooLargeException();
-		
+		std::map<std::string, double>::iterator closest = findClosestDate(db, date);
+		rate = closest->second;
+		std::cout << date << " => " << value << " = " << value * rate << std::endl;
+		return ;
 }
 
+/*	Constructor & Destructor	*/
+BitcoinExchange::BitcoinExchange(){
+	return ;
+}
+
+BitcoinExchange::~BitcoinExchange(){
+	return ;
+}
+
+// void	printMap(std::map<std::string, double> data){
+// 	for (auto it = data.begin(); it != data.end(); it++){
+// 		std::cout << it->first << " => " << it->second << std::endl;
+// 	}
+// 	return ;
+// }
+
+/*	Member Functions	*/
 void	BitcoinExchange::execute(std::string filename){
 	std::ifstream file(filename);
 	std::string line;
@@ -98,12 +131,13 @@ void	BitcoinExchange::execute(std::string filename){
 	_data = parseDB();
 	if (_data.empty())
 		throw BitcoinExchange::InvalidDBException();
+	// printMap(_data);
 	if (!file.is_open())
 		throw BitcoinExchange::InvalidFileException();
 	std::getline(file, line); //skip header
 	while (std::getline(file, line)){
 		try{
-			convert(line);
+			convert(_data, line);
 		}
 		catch (std::exception &e){
 			std::cerr << e.what() << std::endl;
@@ -113,6 +147,7 @@ void	BitcoinExchange::execute(std::string filename){
 	return ;
 }
 
+/*	Exceptions	*/
 const char *BitcoinExchange::InvalidFileException::what() const throw(){
 	return "Error: could not open file.";
 }
@@ -130,8 +165,8 @@ BitcoinExchange::InvalidDateException::InvalidDateException(const std::string& d
 }
 
 const char *BitcoinExchange::InvalidDateException::what() const throw(){
-	std::string res = "Error: date invalid => " + _date;
-	return res.c_str();
+	static std::string errorMessage = "Error: date invalid => " + _date;
+	return errorMessage.c_str();
 }
 
 const char *BitcoinExchange::NegativeValueException::what() const throw(){
