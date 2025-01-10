@@ -1,4 +1,4 @@
-NAME = easy
+NAME = PmergeMe
 
 # compilation
 CC		= c++
