@@ -18,7 +18,8 @@ class RPN {
 	
 	private:
 		RPN(const RPN &src);
-		RPN &operator=(const RPN &src);
+		
+		RPN &	operator=(const RPN &src);
 
 		bool	isOperand(const std::string &token);
 		void	operate(const std::string &token);
