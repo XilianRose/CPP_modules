@@ -1,5 +1,5 @@
 #include "PmergeMe.hpp"
-// #include <iterator>
+#include <iomanip>
 
 PmergeMe::PmergeMe() {
 	_isPrinted = false;
@@ -13,9 +13,13 @@ PmergeMe::~PmergeMe() {
 template <typename T>
 void	PmergeMe::printDuration(const T & container, std::chrono::microseconds duration) {
 	std::string containerType = typeid(container).name();
+	containerType = containerType.erase(0, 3);
+	auto it = containerType.find("IiS");
+	if (it != std::string::npos)
+		containerType.erase(it, 8);
 	std::cout << "Time to process a range of " << container.size();
 	std::cout << " elements with std::" << containerType;
-	std::cout << " : " << duration.count() << " us" << std::endl;
+	std::cout << " : " << std::fixed << std::setprecision(8) << duration.count() << " us" << std::endl;
 	return ;
 
 }
