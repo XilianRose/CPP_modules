@@ -6,10 +6,9 @@ int	main(int argc, char **argv){
 	PmergeMe pm;
 
 	if (argc <= 1){
-		std::cerr << "usage: ./pmerge [sequence of integers]" << std::endl;
+		std::cerr << "usage: ./pmerge [sequence of positive integers]" << std::endl;
 		return 1;
 	}
-
 	std::vector<int> vContainer;
 	std::deque<int> dContainer;
 	try {

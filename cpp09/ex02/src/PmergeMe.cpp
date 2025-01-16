@@ -1,6 +1,8 @@
 #include "PmergeMe.hpp"
+// #include <iterator>
 
 PmergeMe::PmergeMe() {
+	_isPrinted = false;
 	return;
 }
 
@@ -9,16 +11,36 @@ PmergeMe::~PmergeMe() {
 }
 
 template <typename T>
-static void print(T & container) {
-	for (auto it = container.begin(); it != container.end(); it++) {
-		std::cout << *it << " ";
-	}
-	std::cout << std::endl;
+void	PmergeMe::printDuration(const T & container, std::chrono::microseconds duration) {
+	std::string containerType = typeid(container).name();
+	std::cout << "Time to process a range of " << container.size();
+	std::cout << " elements with std::" << containerType;
+	std::cout << " : " << duration.count() << " us" << std::endl;
+	return ;
+
 }
 
 template <typename T>
-static void merge(T & container, T & left, T & right) {
-	container.clear();
+void	PmergeMe::printSequences(const T & filledContainer, const T & sortedContainer) {
+	if (_isPrinted)
+		return ;
+
+	std::cout << "Before:	";
+	for (auto it = filledContainer.begin(); it != filledContainer.end(); it++)
+		std::cout << *it << " ";
+	std::cout << std::endl;
+
+	std::cout << "After:	";
+	for (auto it = sortedContainer.begin(); it != sortedContainer.end(); it++)
+		std::cout << *it << " ";
+	std::cout << std::endl;
+
+	_isPrinted = true;
+	return ;
+}
+
+template <typename T>
+void	PmergeMe::merge(T & container, T & left, T & right) {
 	auto leftIt = left.begin();
 	auto rightIt = right.begin();
 	while (leftIt != left.end() && rightIt != right.end()) {
@@ -42,37 +64,60 @@ static void merge(T & container, T & left, T & right) {
 }
 
 template <typename T>
-static void miSort(T & container) {
+T PmergeMe::miSort(T & container) {
 	if (container.size() <= 1) {
-		return;
+		return container;
 	}
-	auto middle = container.begin() + container.size() / 2;
+	auto middle = container.begin();
+	std::advance(middle, container.size() / 2);
 	T left(container.begin(), middle);
 	T right(middle, container.end());
-	miSort(left);
-	miSort(right);
-	merge(container, left, right);
+	left = miSort(left);
+	right = miSort(right);
+	T sortedContainer;
+	merge(sortedContainer, left, right);
+	return sortedContainer;
 }
 
 template <typename T>
-static T	parse(const T & containerType, int argc, char **argv) {
+T	PmergeMe::parse(const T & containerType, int argc, char **argv) {
 	T filledContainer;
 	for (int i = 1; i < argc; i++) {
 		try {
 			unsigned int ui = std::stoi(argv[i]);
+			filledContainer.push_back(ui);
 		}
 		catch (std::exception &e) {
 			throw PmergeMe::InvalidInput();
 		}
-		filledContainer.push_back(std::atoi(argv[i]));
 	}
+	(void)containerType;
 	return filledContainer;
 }
 
+
 template <typename T>
 void	PmergeMe::run(const T & containerType, int argc, char **argv) {
-	T container = parse(containerType, argc, argv);
-	miSort(container);
-
-	return;
+	// static_assert(std::is_same<typename T::value_type, int>::value, "T must be a container of int");
+	// static_assert(std::is_same<T, std::vector<int>>::value || std::is_same<T, std::deque<int>>::value || std::is_same<T, std::list<int>>::value, "T must be a sequence container of int");
+	auto start = std::chrono::high_resolution_clock::now();
+	T filledContainer = parse(containerType, argc, argv);
+	T sortedContainer = miSort(filledContainer);
+	auto end = std::chrono::high_resolution_clock::now();
+	auto duration = std::chrono::duration_cast<std::chrono::microseconds>(end - start);
+	printSequences(filledContainer, sortedContainer);
+	printDuration(sortedContainer, duration);
+	return ;
 }
+
+const char * PmergeMe::InvalidInput::what() const throw() {
+	return "Error: Invalid input";
+}
+
+template void PmergeMe::run<std::vector<int>>(const std::vector<int>&, int, char**);
+template void PmergeMe::run<std::deque<int>>(const std::deque<int>&, int, char**);
+template void PmergeMe::run<std::list<int>>(const std::list<int>&, int, char**);
+
+template void PmergeMe::printDuration<std::vector<int>>(const std::vector<int>&, std::chrono::microseconds);
+template void PmergeMe::printDuration<std::deque<int>>(const std::deque<int>&, std::chrono::microseconds);
+template void PmergeMe::printDuration<std::list<int>>(const std::list<int>&, std::chrono::microseconds);
