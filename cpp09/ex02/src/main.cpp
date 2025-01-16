@@ -11,9 +11,11 @@ int	main(int argc, char **argv){
 	}
 	std::vector<int> vContainer;
 	std::deque<int> dContainer;
+	std::list<int> lContainer;
 	try {
 		pm.run(vContainer, argc, argv);
 		pm.run(dContainer, argc, argv);
+		pm.run(lContainer, argc, argv);
 	}
 	catch (std::exception &e) {
 		std::cerr << RED << e.what() << NC << std::endl;

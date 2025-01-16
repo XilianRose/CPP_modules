@@ -13,10 +13,8 @@ PmergeMe::~PmergeMe() {
 template <typename T>
 void	PmergeMe::printDuration(const T & container, std::chrono::microseconds duration) {
 	std::string containerType = typeid(container).name();
-	containerType = containerType.erase(0, 3);
-	auto it = containerType.find("IiS");
-	if (it != std::string::npos)
-		containerType.erase(it, 8);
+	containerType = containerType.erase(0, containerType.find_last_of("0123456789") + 1);
+	containerType = containerType.erase(containerType.find("I", 0), containerType.size());
 	std::cout << "Time to process a range of " << container.size();
 	std::cout << " elements with std::" << containerType;
 	std::cout << "	: " << std::fixed << std::setprecision(8) << duration.count() << " us" << std::endl;
