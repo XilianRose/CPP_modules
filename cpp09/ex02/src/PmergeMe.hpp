@@ -12,13 +12,18 @@ class PmergeMe{
 		~PmergeMe();
 
 		template <typename T>
-		void		run(const T & containerType, int argc, char **argv);
+		void		run(T & containerType, int argc, char **argv);
 
 		class InvalidInput : public std::exception{
 			public:
 				virtual const char * what() const throw();
 		};
 
+		class ValueOutOfRange : public std::exception{
+			public:
+				virtual const char * what() const throw();
+		};
+		
 	private:
 		PmergeMe(const PmergeMe &src);
 
@@ -33,7 +38,7 @@ class PmergeMe{
 		template <typename T>
 		T		miSort(T & container);
 		template <typename T>
-		T		parse(const T & containerType, int argc, char **argv);
+		T		parse(T & filledContainer, int argc, char **argv);
 
 		bool	_isPrinted;
 };

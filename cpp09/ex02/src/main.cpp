@@ -15,7 +15,7 @@ int	main(int argc, char **argv){
 		pm.run(vContainer, argc, argv);
 		pm.run(dContainer, argc, argv);
 	}
-	catch (PmergeMe::InvalidInput &e) {
+	catch (std::exception &e) {
 		std::cerr << RED << e.what() << NC << std::endl;
 		return 1;
 	}
