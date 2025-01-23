@@ -29,12 +29,20 @@ class PmergeMe{
 
 		PmergeMe &	operator=(const PmergeMe &src);
 
+		// merge sort implementation
+		// template <typename T>
+		// void	merge(T & container, T & left, T & right);
+		// template <typename T>
+		// T		miSort(T & container);
 		template <typename T>
 		void	printDuration(const T & container, std::chrono::microseconds duration);
 		template <typename T>
 		void	printSequences(const T & filledContainer, const T & sortedContainer);
+		int		jacobsthal(int n);
+		// template <typename T>
+		// void	binarySearch(T & sortedContainer, int value, int start, int end);
 		template <typename T>
-		void	merge(T & container, T & left, T & right);
+		void	sortElements(T & container);
 		template <typename T>
 		T		miSort(T & container);
 		template <typename T>

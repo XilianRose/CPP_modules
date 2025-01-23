@@ -1,5 +1,6 @@
 #include "PmergeMe.hpp"
 #include <iomanip>
+#include "colours.hpp"
 
 PmergeMe::PmergeMe() {
 	_isPrinted = false;
@@ -41,43 +42,145 @@ void	PmergeMe::printSequences(const T & filledContainer, const T & sortedContain
 	return ;
 }
 
+// merge sort implementation
+// template <typename T>
+// void	PmergeMe::merge(T & container, T & left, T & right) {
+// 	auto leftIt = left.begin();
+// 	auto rightIt = right.begin();
+// 	while (leftIt != left.end() && rightIt != right.end()) {
+// 		if (*leftIt < *rightIt) {
+// 			container.push_back(*leftIt);
+// 			leftIt++;
+// 		}
+// 		else {
+// 			container.push_back(*rightIt);
+// 			rightIt++;
+// 		}
+// 	}
+// 	while (leftIt != left.end()) {
+// 		container.push_back(*leftIt);
+// 		leftIt++;
+// 	}
+// 	while (rightIt != right.end()) {
+// 		container.push_back(*rightIt);
+// 		rightIt++;
+// 	}
+// }
+
+// template <typename T>
+// T PmergeMe::miSort(T & container) {
+// 	if (container.size() <= 1) {
+// 		return container;
+// 	}
+// 	auto middle = container.begin();
+// 	std::advance(middle, container.size() / 2);
+// 	T left(container.begin(), middle);
+// 	T right(middle, container.end());
+// 	left = miSort(left);
+// 	right = miSort(right);
+// 	T sortedContainer;
+// 	merge(sortedContainer, left, right);
+// 	return sortedContainer;
+// }
+
+int PmergeMe::jacobsthal(int n) {
+	if (n == 0)
+		return 0;
+	if (n == 1)
+		return 1;
+	return jacobsthal(n - 1) + 2 * jacobsthal(n - 2);
+}
+
+// template <typename T>
+// void PmergeMe::binarySearch(T & sortedContainer, int value, int start, int end) {
+// 	auto it = sortedContainer.begin();
+// 	if (start >= end){
+// 		std::advance(it, start);
+// 		sortedContainer.insert(it, value);
+// 		return ;
+// 	}
+// 	int mid = start + (end - start) / 2;
+// 	auto middle = sortedContainer.begin();
+// 	std::advance(middle, mid);
+// 	if (*middle == value) {
+// 		std::advance(it, mid);
+// 		sortedContainer.insert(it, value);
+// 		return ;
+// 	}
+// 	if (*middle > value)
+// 		binarySearch(sortedContainer, value, start, mid);
+// 	else
+// 		binarySearch(sortedContainer, value, mid + 1, end);
+// }
+
 template <typename T>
-void	PmergeMe::merge(T & container, T & left, T & right) {
-	auto leftIt = left.begin();
-	auto rightIt = right.begin();
-	while (leftIt != left.end() && rightIt != right.end()) {
-		if (*leftIt < *rightIt) {
-			container.push_back(*leftIt);
-			leftIt++;
+void	PmergeMe::sortElements(T & container) {
+	for (auto it = container.begin(); it != container.end(); ++it) {
+		auto next = it;
+		++next;
+		if (next != container.end() && *it > *next) {
+			std::swap(*it, *next);
 		}
-		else {
-			container.push_back(*rightIt);
-			rightIt++;
-		}
-	}
-	while (leftIt != left.end()) {
-		container.push_back(*leftIt);
-		leftIt++;
-	}
-	while (rightIt != right.end()) {
-		container.push_back(*rightIt);
-		rightIt++;
 	}
 }
 
 template <typename T>
-T PmergeMe::miSort(T & container) {
+T	PmergeMe::miSort(T & container) {
 	if (container.size() <= 1) {
 		return container;
 	}
-	auto middle = container.begin();
-	std::advance(middle, container.size() / 2);
-	T left(container.begin(), middle);
-	T right(middle, container.end());
-	left = miSort(left);
-	right = miSort(right);
-	T sortedContainer;
-	merge(sortedContainer, left, right);
+
+	std::vector<std::pair<int, int>> pairs;
+	for (auto it = container.begin(); it != container.end();) {
+		// std::cout << RED "here " << *it << NC << std::endl;
+		auto first = *it;
+		++it;
+		if (it != container.end()) {
+			auto second = *it;
+			if (first > second) 
+				std::swap(first, second);
+			pairs.push_back(std::make_pair(first, second));
+			++it;
+		}
+		else
+			pairs.push_back(std::make_pair(first, first));
+	}
+
+	//large elements into sortedContainer & recursively sort
+	T largeElements;
+	for (auto it = pairs.begin(); it != pairs.end(); ++it) {
+		if (it->first != it->second)
+			largeElements.push_back(it->second);
+	}
+	sortElements(largeElements);
+
+	//Insert the smaller element paired with the smallest of large elements into sortedContainer
+	T sortedContainer = largeElements;
+	for (auto it = largeElements.begin(); it != largeElements.end(); ++it) {
+		for (auto find = pairs.begin(); find != pairs.end(); ++find) {
+			if (*it == find->second) {
+				sortedContainer.insert(sortedContainer.begin(), find->first);
+				pairs.erase(find);
+				break;
+			}
+		}
+	}
+	
+
+	//insert remaining smaller elements with special Jacobsthal sequence
+	int j = 1;
+	int len = pairs.size();
+	for (int i = 0; i < len; i++) {
+		for (int jacob = jacobsthal(j); jacob > 0 && jacob > jacobsthal(j - 1); jacob--) {
+			auto it = pairs.begin();
+			if (jacob >= len)
+				jacob = len - 1;
+			std::advance(it, jacob);
+			auto pos = std::lower_bound(sortedContainer.begin(), sortedContainer.end(), it->first);
+			sortedContainer.insert(pos, it->first);
+		}
+		j++;
+	}
 	return sortedContainer;
 }
 
