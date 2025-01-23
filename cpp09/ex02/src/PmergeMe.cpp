@@ -17,7 +17,7 @@ void	PmergeMe::printDuration(const T & container, std::chrono::microseconds dura
 	containerType = containerType.erase(0, containerType.find_last_of("0123456789") + 1);
 	containerType = containerType.erase(containerType.find("I", 0), containerType.size());
 	std::cout << "Time to process a range of " << container.size();
-	std::cout << " elements with std::" << containerType;
+	std::cout << " elements with	std::" << containerType;
 	std::cout << "	: " << std::fixed << std::setprecision(8) << duration.count() << " us" << std::endl;
 	return ;
 
@@ -83,14 +83,6 @@ void	PmergeMe::printSequences(const T & filledContainer, const T & sortedContain
 // 	return sortedContainer;
 // }
 
-int PmergeMe::jacobsthal(int n) {
-	if (n == 0)
-		return 0;
-	if (n == 1)
-		return 1;
-	return jacobsthal(n - 1) + 2 * jacobsthal(n - 2);
-}
-
 // template <typename T>
 // void PmergeMe::binarySearch(T & sortedContainer, int value, int start, int end) {
 // 	auto it = sortedContainer.begin();
@@ -113,26 +105,29 @@ int PmergeMe::jacobsthal(int n) {
 // 		binarySearch(sortedContainer, value, mid + 1, end);
 // }
 
-template <typename T>
-void	PmergeMe::sortElements(T & container) {
-	for (auto it = container.begin(); it != container.end(); ++it) {
-		auto next = it;
-		++next;
-		if (next != container.end() && *it > *next) {
-			std::swap(*it, *next);
+int PmergeMe::jacobsthal(int n) {
+	if (n == 0)
+		return 0;
+	if (n == 1)
+		return 1;
+	return jacobsthal(n - 1) + 2 * jacobsthal(n - 2);
+}
+
+void	PmergeMe::bubbleSort(std::vector<std::pair<int, int>> & pairs) {
+	for (size_t i = 0; i < pairs.size(); ++i) {
+		for (size_t j = 0; j < pairs.size() - 1; ++j) {
+			if (pairs[j].second > pairs[j + 1].second) {
+				std::swap(pairs[j], pairs[j + 1]);
+			}
 		}
 	}
+	return ;
 }
 
 template <typename T>
-T	PmergeMe::miSort(T & container) {
-	if (container.size() <= 1) {
-		return container;
-	}
-
+std::vector<std::pair<int, int>>	PmergeMe::makePairs(T & container) {
 	std::vector<std::pair<int, int>> pairs;
 	for (auto it = container.begin(); it != container.end();) {
-		// std::cout << RED "here " << *it << NC << std::endl;
 		auto first = *it;
 		++it;
 		if (it != container.end()) {
@@ -145,32 +140,35 @@ T	PmergeMe::miSort(T & container) {
 		else
 			pairs.push_back(std::make_pair(first, first));
 	}
+	return pairs;
+}
 
-	//large elements into sortedContainer & recursively sort
-	T largeElements;
-	for (auto it = pairs.begin(); it != pairs.end(); ++it) {
-		if (it->first != it->second)
-			largeElements.push_back(it->second);
+template <typename T>
+T	PmergeMe::miSort(T & container) {
+	if (container.size() <= 1) {
+		return container;
 	}
-	sortElements(largeElements);
 
+	//make pairs of elements
+	std::vector<std::pair<int, int>> pairs = makePairs(container);
+
+	//sort pairs by largest element
+	bubbleSort(pairs);
+
+	T sortedContainer;
 	//Insert the smaller element paired with the smallest of large elements into sortedContainer
-	T sortedContainer = largeElements;
-	for (auto it = largeElements.begin(); it != largeElements.end(); ++it) {
-		for (auto find = pairs.begin(); find != pairs.end(); ++find) {
-			if (*it == find->second) {
-				sortedContainer.insert(sortedContainer.begin(), find->first);
-				pairs.erase(find);
-				break;
-			}
-		}
-	}
-	
+	if (pairs.begin()->first != pairs.begin()->second)
+		sortedContainer.push_back(pairs.begin()->first);
+	//put the largest elements in the sorted container
+	for (auto it = pairs.begin(); it != pairs.end(); ++it){
+		sortedContainer.push_back(it->second);
+	}	
 
 	//insert remaining smaller elements with special Jacobsthal sequence
+	int i = 1;
 	int j = 1;
 	int len = pairs.size();
-	for (int i = 0; i < len; i++) {
+	while (i < len) {
 		for (int jacob = jacobsthal(j); jacob > 0 && jacob > jacobsthal(j - 1); jacob--) {
 			auto it = pairs.begin();
 			if (jacob >= len)
@@ -178,8 +176,9 @@ T	PmergeMe::miSort(T & container) {
 			std::advance(it, jacob);
 			auto pos = std::lower_bound(sortedContainer.begin(), sortedContainer.end(), it->first);
 			sortedContainer.insert(pos, it->first);
+			++i;
 		}
-		j++;
+		++j;
 	}
 	return sortedContainer;
 }

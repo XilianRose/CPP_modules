@@ -35,18 +35,17 @@ class PmergeMe{
 		// template <typename T>
 		// T		miSort(T & container);
 		template <typename T>
-		void	printDuration(const T & container, std::chrono::microseconds duration);
+		void								printDuration(const T & container, std::chrono::microseconds duration);
 		template <typename T>
-		void	printSequences(const T & filledContainer, const T & sortedContainer);
-		int		jacobsthal(int n);
-		// template <typename T>
-		// void	binarySearch(T & sortedContainer, int value, int start, int end);
+		void								printSequences(const T & filledContainer, const T & sortedContainer);
+		int									jacobsthal(int n);
 		template <typename T>
-		void	sortElements(T & container);
+		std::vector<std::pair<int, int>>	makePairs(T & container);
+		void								bubbleSort(std::vector<std::pair<int, int>> & pairs);
 		template <typename T>
-		T		miSort(T & container);
+		T									miSort(T & container);
 		template <typename T>
-		T		parse(T & filledContainer, int argc, char **argv);
+		T									parse(T & filledContainer, int argc, char **argv);
 
 		bool	_isPrinted;
 };
