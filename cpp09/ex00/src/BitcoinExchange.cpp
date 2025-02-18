@@ -41,7 +41,7 @@ bool	validateDate(std::string date){
 
 std::map<std::string, double>	parseDB(void){
 	std::map<std::string, double> data;
-	std::ifstream db("/home/mstegema/Documents/CPP_modules/cpp09/ex00/src/data.csv");
+	std::ifstream db("src/data.csv");
 	std::string line;
 	std::string date;
 	double value;
