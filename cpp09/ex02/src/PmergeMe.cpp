@@ -142,36 +142,7 @@ std::vector<std::pair<int, int>>	PmergeMe::makePairs(T & container) {
 }
 
 template <typename T>
-T	PmergeMe::miSort(T & container) {
-	if (container.size() <= 1) {
-		return container;
-	}
-
-	// take out the single element if the container size is uneven
-	bool isUneven = false;
-	typename T::value_type singleElement;
-	if (container.size() % 2 != 0){
-		isUneven = true;
-		singleElement = container.back();
-		container.pop_back();
-	}
-
-	//make pairs of elements
-	std::vector<std::pair<int, int>> pairs = makePairs(container);
-
-	//sort pairs by largest element
-	bubbleSort(pairs);
-
-	T sortedContainer;
-	//Insert the smaller element paired with the smallest of large elements into sortedContainer
-	sortedContainer.push_back(pairs.begin()->first);
-
-	//put the largest elements in the sorted container
-	for (auto it = pairs.begin(); it != pairs.end(); ++it){
-		sortedContainer.push_back(it->second);
-	}	
-
-	//insert remaining smaller elements with special Jacobsthal sequence
+void PmergeMe::insertUsingJacobsthal(T &sortedContainer, std::vector<std::pair<int, int>> &pairs) {
 	int i = 1;
 	int j = 1;
 	int len = pairs.size();
@@ -187,12 +158,37 @@ T	PmergeMe::miSort(T & container) {
 		}
 		++j;
 	}
+}
 
-	//insert the single element
+template <typename T>
+T PmergeMe::miSort(T &container) {
+	if (container.size() <= 1) {
+		return container;
+	}
+
+	bool isUneven = false;
+	int singleElement = 0;
+	if (container.size() % 2 != 0) {
+		isUneven = true;
+		singleElement = container.back();
+		container.pop_back();
+	}
+
+	std::vector<std::pair<int, int>> pairs = makePairs(container);
+	bubbleSort(pairs);
+
+	T sortedContainer;
+	sortedContainer.push_back(pairs.begin()->first);
+
+	for (auto it = pairs.begin(); it != pairs.end(); ++it) {
+		sortedContainer.push_back(it->second);
+	}
+
+	insertUsingJacobsthal(sortedContainer, pairs);
+
 	if (isUneven) {
 		auto pos = std::lower_bound(sortedContainer.begin(), sortedContainer.end(), singleElement);
 		sortedContainer.insert(pos, singleElement);
-		//return single element to original container
 		container.push_back(singleElement);
 	}
 

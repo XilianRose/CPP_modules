@@ -43,6 +43,8 @@ class PmergeMe{
 		std::vector<std::pair<int, int>>	makePairs(T & container);
 		void								bubbleSort(std::vector<std::pair<int, int>> & pairs);
 		template <typename T>
+		void								insertUsingJacobsthal(T & sortedContainer, std::vector<std::pair<int, int>> & pairs);
+		template <typename T>
 		T									miSort(T & container);
 		template <typename T>
 		T									parse(T & filledContainer, int argc, char **argv);
