@@ -137,8 +137,6 @@ std::vector<std::pair<int, int>>	PmergeMe::makePairs(T & container) {
 			pairs.push_back(std::make_pair(first, second));
 			++it;
 		}
-		else
-			pairs.push_back(std::make_pair(first, first));
 	}
 	return pairs;
 }
@@ -149,6 +147,15 @@ T	PmergeMe::miSort(T & container) {
 		return container;
 	}
 
+	// take out the single element if the container size is uneven
+	bool isUneven = false;
+	typename T::value_type singleElement;
+	if (container.size() % 2 != 0){
+		isUneven = true;
+		singleElement = container.back();
+		container.pop_back();
+	}
+
 	//make pairs of elements
 	std::vector<std::pair<int, int>> pairs = makePairs(container);
 
@@ -157,8 +164,8 @@ T	PmergeMe::miSort(T & container) {
 
 	T sortedContainer;
 	//Insert the smaller element paired with the smallest of large elements into sortedContainer
-	if (pairs.begin()->first != pairs.begin()->second)
-		sortedContainer.push_back(pairs.begin()->first);
+	sortedContainer.push_back(pairs.begin()->first);
+
 	//put the largest elements in the sorted container
 	for (auto it = pairs.begin(); it != pairs.end(); ++it){
 		sortedContainer.push_back(it->second);
@@ -180,6 +187,15 @@ T	PmergeMe::miSort(T & container) {
 		}
 		++j;
 	}
+
+	//insert the single element
+	if (isUneven) {
+		auto pos = std::lower_bound(sortedContainer.begin(), sortedContainer.end(), singleElement);
+		sortedContainer.insert(pos, singleElement);
+		//return single element to original container
+		container.push_back(singleElement);
+	}
+
 	return sortedContainer;
 }
 
